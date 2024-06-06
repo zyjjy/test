@@ -1,0 +1,12 @@
+//C语言对二维数组使用的存放方式
+#include<stdio.h>
+int main(){
+        int a[2][3]={{1,2,3},{4,5,6}};
+        int *p,*q;
+        p=&a[0][0];
+        q=&a[0][1];
+        
+        printf("%d\n",*p);
+        printf("%d\n",*q);
+        return 0;
+}
