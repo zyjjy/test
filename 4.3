@@ -1,0 +1,59 @@
+#include <stdio.h>  
+#include <stdlib.h>    
+
+// 定义链表节点结构体
+typedef struct list_item {  
+    int data;  // 数据域
+    struct list_item *next;  // 指向下一个节点的指针
+} list_item; 
+
+// 插入函数，用于向链表尾部添加节点
+list_item* insert(list_item** head, int data) {  
+    list_item* new_node = (list_item*)malloc(sizeof(list_item));  // 为新节点分配内存
+    if (!new_node) {  // 如果内存分配失败
+        return NULL;  
+    }  
+    new_node->data = data;  // 设置新节点的数据域
+    new_node->next = NULL;  // 新节点的下一个节点为空
+    if (!*head) {  // 如果链表为空
+        *head = new_node;  // 将新节点设为头节点
+    } else {  
+        list_item* temp = *head;  // 临时指针指向头节点
+        while (temp->next) {  // 遍历链表，找到最后一个节点
+            temp = temp->next;  
+        }
+        temp->next = new_node;  // 将新节点插入到链表尾部
+    }  
+    return *head;  // 返回链表头节点
+}
+
+// 打印链表函数
+void printList(list_item* head) {  
+    list_item* temp = head;  // 临时指针指向头节点
+    while (temp) {  // 遍历链表
+        printf("%d ", temp->data);  // 打印当前节点的数据
+        temp = temp->next;  // 指向下一个节点
+    }  
+    printf("\n");  // 打印换行符
+}
+
+// 释放链表内存函数
+void erase_list(list_item* head) {  
+    list_item* temp;  
+    while (head) {  // 遍历链表
+        temp = head;  // 临时指针指向当前节点
+        head = head->next;  // 头指针指向下一个节点
+        free(temp);  // 释放当前节点的内存
+    }  
+}  
+  
+int main() {  
+    list_item* head = NULL;  // 初始化链表头指针为空
+    head = insert(&head, 1);  // 插入数据1
+    head = insert(&head, 2);  // 插入数据2
+    head = insert(&head, 3);  // 插入数据3
+    head = insert(&head, 4);  // 插入数据4
+    printList(head);  // 打印链表
+    erase_list(head);  // 释放链表内存
+    return 0; 
+}
