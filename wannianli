@@ -1,0 +1,123 @@
+#include<stdio.h>
+
+// 判断是否为闰年
+int f1(int year){
+    if(year%4 == 0 && year%100 != 0){
+           return 1;  // 闰年
+    }
+        else if(year%400 == 0){
+       return 1;  // 闰年
+        }
+        else
+       return 0;  // 平年
+}
+
+// 打印星期标题
+void f2(){
+    printf("   Mon Tue Wed Thu Fri Sat Sun\n");
+}
+
+// 计算某年1月1日是星期几
+int firstdayofyear(int year){
+    int i;
+    int a = 2;  // 1924年1月1日是星期二
+    for(i = 1924;i < year;i++){
+        if(f1(i)){
+            a = a+2;  // 闰年加2天
+        }
+        else
+            a = a+1;  // 平年加1天
+    }
+    int b;
+    if(a%7==0){
+        b = 7;  // 如果余数为0，则设为7（星期日）
+    }
+    else
+        b = a%7;  // 否则取余数
+    return b;
+}
+
+// 获取某年某月的天数
+int monthday(int year,int month){
+      int days[] = {0,31,28,31,30,31,30,31,31,30,31,30,31};  // 各个月的天数
+      if (month == 2 && f1(year)){
+      return 29;  // 闰年2月有29天
+      }
+      return days[month];
+}
+
+// 计算某年某月的1日是星期几（平年算法）
+int firstdayofmonth(int year,int month){
+     int i = firstdayofyear(year);
+     int first[] ={0,i,((i+3)%7),((i+3)%7),((i+6)%7),((i+1)%7),((i+4)%7),((i+6)%7),((i+2)%7),((i+5)%7),i,((i+3)%7),((i+5)%7)};
+     for(int m=1;m<=12;m++){
+           if(first[m]==0){
+               first[m]=7;
+           }
+     }
+     return first[month];
+}
+
+// 计算某年某月的1日是星期几（闰年算法）
+int firstdayofmonth2(int year,int month){
+     int i = firstdayofyear(year);
+     int first[] ={0,i,(i+3)%7,((i+4)%7),((i)%7),((i+2)%7),((i+5)%7),((i)%7),((i+3)%7),((i+6)%7),((i+1)%7),((i+4)%7),((i+6)%7)};
+     for(int m=1;m<=12;m++){if(first[m]==0){
+               first[m]=7;
+           }
+     }
+     return first[month];
+}
+
+// 打印某年某月的日历
+void f3(int year,int month){
+     int n = monthday(year,month);  // 获取该月的天数
+     if(f1(year)){
+           int f = firstdayofmonth2(year,month);  // 获取该月的1日是星期几（闰年）
+           f2();
+           for(int i = 1;i < f;i++){
+               printf("    ");  // 打印空格填充到该月1日的星期位置
+           }
+           for(int day = 1;day <= n;day++){
+               printf("%4d",day);  // 打印日期
+               f++;
+               if(f>7){
+               f = 1;
+               printf("\n");  // 换行
+               }    
+           }
+           if(f != 0){
+                printf("\n");
+           }
+     }
+     else{ 
+           int f = firstdayofmonth(year,month);  // 获取该月的1日是星期几（平年）
+           f2();
+           for(int i = 1;i < f;i++){
+               printf("    ");  // 打印空格填充到该月1日的星期位置
+           }
+           for(int day = 1;day <= n;day++){
+               printf("%4d",day);  // 打印日期
+               f++;
+               if(f>7){
+               f = 1;
+               printf("\n");  // 换行
+               }    
+           }
+           if(f != 0){
+                printf("\n");
+           }
+     }
+        
+}
+
+// 主函数，输入年份并打印该年的所有月份的日历
+int main(){
+    int year;
+    scanf("%d",&year);
+    for(int month = 1;month <= 12;month++){
+           printf("\n%d %d\n",year,month);  // 打印年份和月份
+           f3(year,month);  // 打印该月的日历
+           
+          }
+}
