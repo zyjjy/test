@@ -1,0 +1,15 @@
+//实现对该二维数组任意元素A[m,n]的访问
+#include<stdio.h>
+//定义函数使其接收数组中的任意元素并通过对指针指向地址的改变实现对任意元素的访问
+int two_dim_array_access(int *x,int i,int j,int m,int n,int C){
+       int a=(m-i)*C+(n-j);
+       return *(x+a);
+}
+int main(){
+      int A[2][3]={{1,2,3},{4,5,6}};  //定义一个二维数组
+      int m=two_dim_array_access(&A[0][0],0,0,1,2,3);  //对两个任意元素进行访问
+      int n=two_dim_array_access(&A[1][2],1,2,1,2,3);
+      printf("%d\n",m);
+      printf("%d\n",n);
+      return 0;
+}
