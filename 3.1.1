@@ -1,0 +1,30 @@
+#include <stdio.h>  
+
+// 选择排序算法
+void b(int a[], int n) {  
+    int i, j, t;  
+    for (i = 0; i < n-1; i++) {  // 外层循环控制排序轮数
+        for (j = 0; j < n-i-1; j++) {  // 内层循环控制每轮的比较次数
+            if (a[j] > a[j+1]) {  // 如果前一个元素比后一个元素大，则交换它们
+                t = a[j];  
+                a[j] = a[j+1];  
+                a[j+1] = t;  
+            }  
+        }  
+    }  
+}  
+
+int main() {  
+    int a[10];  // 定义一个长度为10的整型数组
+    int i;
+    for(i = 0; i < 10; i++){
+        scanf("%d",&a[i]);  // 从标准输入读取10个整数
+    }  
+    int n = 10;  // 数组长度
+    int m;  
+    b(a, n);  // 调用选择排序算法对数组进行排序
+    for (m=0; m < n; m++)  
+        printf("%d ", a[m]);  // 打印排序后的数组
+    printf("\n");  
+    return 0;  
+}
