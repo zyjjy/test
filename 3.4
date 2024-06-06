@@ -1,0 +1,34 @@
+//输入为不确定个数的字符，输出为这些字符的图案表示
+#include<stdio.h>
+void f1(){
+     printf("******\n*\n******\n*\n******");
+}
+void f2(){
+     printf("\033[4A ******\n*      *\n****** ******\n*      *\n****** *");
+}
+void f3(){
+     printf("     \033[4A *****\n*      *      *    *\n****** ****** *****\n*      *      *    *\n****** *      *****");
+}
+  
+  
+int main() {  
+    char str[100];  
+    scanf("%s", str);
+    int i;
+    for(i=0;i<3;i++){
+          switch(str[i]){
+               case 'E':
+               f1();
+               break;
+               case 'F':
+               f2();
+               break;
+               case 'B':
+               f3();
+               break;
+           }
+       }
+       return 0;
+}
+          
+              
