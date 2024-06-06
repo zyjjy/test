@@ -1,0 +1,20 @@
+//输入为单个英文字符，输出为该英文字符的图案表示
+#include<stdio.h>
+int main(){
+	char letter;
+	scanf("%c",&letter); //接收用户的输入
+	switch(letter){  //根据输入判断输出哪个图像
+		case 'A':
+		printf("     *\n    * *\n   *****\n  *     *\n *       *\n"); //A的图案设计
+		break;
+		case 'B':
+		printf("    ****\n    *   *\n    ****\n    *   *\n    ****\n"); //B的图案设计
+		break;
+		case 'C':
+		printf("      ******\n     *\n    *\n    *\n     *\n      ******\n"); //C的图案设计
+		break;
+		default:
+		break;
+	}      
+	return 0;
+}
