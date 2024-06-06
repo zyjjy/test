@@ -1,0 +1,72 @@
+#include<stdio.h>
+//打印棋盘
+void print(char board[3][3]){
+      int i,j;
+      for(i=0;i<3;i++){   //遍历每一行
+           for(j=0;j<3;j++){   //遍历每一列
+               printf("%c",board[i][j]);
+           }
+           printf("\n");
+      }
+}
+//检查是否有玩家胜利
+int check(char board[3][3],char place){
+      for (int i = 0; i < 3; i++) {  
+        if (board[i][0] == place && board[i][1] == place && board[i][2] == place) {   //检查行
+            return 1;  
+        }  
+      }
+      for (int j = 0; j < 3; j++) {  
+        if (board[0][j] == place && board[1][j] == place && board[2][j] == place) {   //检查列 
+            return 1;  
+        }  
+      }
+      if ((board[0][0] == place && board[1][1] == place && board[2][2] == place) || (board[0][2] == place && board[1][1] == place && board[2][0] == place)) {    //检查对角线 
+           return 1;  
+      }
+      return 0;
+}
+//检查棋盘是否被占用完
+int over(char board[3][3]){
+     int i,j;
+     for(i=0;i<3;i++){   //遍历每一行
+           for(j=0;j<3;j++){   //遍历每一列
+                if(board[i][j]==' '){
+                      return 0;
+                }
+           }
+     }
+     return 1;
+}
+//定义主函数，实现井字棋游戏的功能
+int main(){
+     char board[3][3]={{' ',' ',' '},{' ',' ',' '},{' ',' ',' '}};
+     char place='X';
+     while(1){
+          print(board);
+          int i,j;
+          printf("player %c (row col)",place);c //检查每一行的棋子
+          scanf("%d %d",&i,&j);
+          if(board[i-1][j-1]!=' '||i<1||i>3||j<1||j>3){
+              printf("try again\n");
+              continue;
+          }
+          board[i-1][j-1]=place;
+          if(check(board,place)){
+              print(board);
+              printf("player %c win the game\n",place);
+              break;
+          }
+          if(place=='X'){
+               place='O';
+          }
+          else{
+              place='X';
+          }
+          if(over(board)){
+                print(board);
+                printf("over\n");
+                break;
+          }
+     }
+}
