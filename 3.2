@@ -1,0 +1,83 @@
+// 对一个char型的二维数组A进行排序
+#include <stdio.h>
+
+// 冒泡排序函数，用于对一维字符数组进行升序排序
+void f1(char a[], int cols) {  
+    int i, j;  
+    char m;  
+    for (i = 0; i < cols - 1; i++) {  
+        for (j = 0; j < cols - i - 1; j++) {  
+            // 如果前一个字符大于后一个字符，则交换它们
+            if (a[j] > a[j + 1]) {  
+                m = a[j];  
+                a[j] = a[j + 1];  
+                a[j + 1] = m;  
+            }  
+        }  
+    }  
+}  
+
+// 对二维字符数组的每一行进行排序
+void f2(char a[5][6], int rows, int cols) {  
+    int i;  
+    for (i = 0; i < rows; i++) {  
+        f1(a[i], cols);  
+    }  
+}
+
+// 计算一维字符数组的ASCII码和
+int f3(char a[], int cols) {  
+    int n = 0;  
+    for (int i = 0; i < cols; i++) { //遍历一维数组并将其中的字符对应的ASCLL码相加 
+        n += (int)a[i];  
+    }  
+    return n;  
+}    
+
+// 交换二维字符数组中的两行
+void f4(char a[5][6], int row1, int row2, int cols) {  
+    char b[cols];  
+    for (int i = 0; i < cols; i++) {  
+        b[i] = a[row1][i];  
+        a[row1][i] = a[row2][i];  
+        a[row2][i] = b[i];  
+    }  
+}  
+
+// 根据ASCII码和对二维字符数组的行进行排序
+void f5(char a[5][6], int rows, int cols) {  
+    int i, j;  
+    for (i = 0; i < rows - 1; i++) {  
+        for (j = 0; j < rows - i - 1; j++) {  
+            // 如果前一行的ASCII码和大于等于后一行，则交换它们
+            if (f3(a[j], cols) >= f3(a[j + 1], cols)) {  
+                f4(a, j, j + 1, cols);  
+            }  
+        }  
+    }  
+}    
+
+int main() {
+    // 初始化二维字符数组
+    char a[5][6] = {
+        {'S', 'D', 'U', 'Y', 'E', 'S'},
+        {'C', 'H', 'I', 'N', 'A', '!'},
+        {'A', 'F', 'T', 'E', 'R', 'X'},
+        {'h', 'e', 'r', 'o', 'a', 'b'},
+        {'C', 'y', 'y', 'D', 'S', '!'}
+    };
+
+    // 对二维数组的每一行进行排序
+    f2(a, 5, 6);
+    // 对二维数组的行根据ASCII码和进行排序
+    f5(a, 5, 6);
+
+    // 打印排序后的二维数组
+    for (int i = 0; i < 5; i++) {  
+        for (int j = 0; j < 6; j++) {  
+            printf("%c", a[i][j]);
+        }  
+        printf("\n");  
+    } 
+    return 0;
+}
