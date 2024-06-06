@@ -1,0 +1,48 @@
+#include <stdio.h>  
+#include <stdlib.h>  
+#include <unistd.h> 
+
+#define RECT_WIDTH 5   // 矩形的宽度
+#define RECT_HEIGHT 3  // 矩形的高度
+  
+typedef struct {  
+    int x, y;    // 矩形左上角的坐标
+    int dx, dy;  // 矩形的移动速度
+} Rectangles;  
+  
+// 绘制矩形函数
+void drawRectangle(const Rectangles *rect, char symbol) {  
+    for (int i = 0; i < RECT_HEIGHT; ++i) {  
+        for (int j = 0; j < RECT_WIDTH; ++j) {  
+            // 移动光标并打印矩形符号
+            printf("\033[031m\033[%d;%dH%c", rect->y + i, rect->x + j, symbol); 
+        }  
+    }  
+}  
+  
+// 更新矩形位置函数
+void updateRectangle(Rectangles *rect) {  
+    rect->x += rect->dx;  
+    rect->y += rect->dy;  
+    if (rect->x < 0) rect->x = 0;   // 确保矩形不会移出屏幕左边界
+    if (rect->y < 0) rect->y = 0;   // 确保矩形不会移出屏幕上边界
+}  
+  
+int main() {  
+    Rectangles rectangles[] = {  
+        {10, 10, -2, 1}, // 初始化第一个矩形
+        {30, 10, 2, 1}   // 初始化第二个矩形
+    };  
+    int rectangleCount = sizeof(rectangles) / sizeof(rectangles[0]);   // 计算矩形数量
+    while (1) { 
+        printf("\033[H\033[J"); // 清屏
+        for (int i = 0; i < rectangleCount; ++i) {  
+            drawRectangle(&rectangles[i], '*');   // 绘制每个矩形
+        }  
+        for (int i = 0; i < rectangleCount; ++i) {  
+            updateRectangle(&rectangles[i]);   // 更新每个矩形的位置
+        }  
+        usleep(300000);  // 暂停300毫秒
+    }  
+    return 0; 
+}
