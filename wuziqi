@@ -1,0 +1,89 @@
+#include <stdio.h>  
+
+// 打印棋盘函数
+void printboard(char board[15][15]) {  
+    for (int i = 0; i < 15; i++) {  
+        for (int j = 0; j < 15; j++) {  
+            printf("%c ", board[i][j]);  
+        }  
+        printf("\n");  
+    }  
+}  
+  
+// 检查玩家是否获胜的函数
+int check(char board[15][15], int x, int y, char player) {    
+    int dx[] = {0, 1, 1, 1};  // 方向数组，用于表示四个方向的x增量
+    int dy[] = {1, 0, 1, -1}; // 方向数组，用于表示四个方向的y增量
+    for (int i = 0; i < 4; i++) {  
+        int count = 1;  
+        for (int j = 1; j < 5; j++) {  
+            int nx = x + dx[i] * j;  
+            int ny = y + dy[i] * j;  
+            // 判断该方向是否连续五个相同棋子
+            if (nx >= 0 && nx < 15 && ny >= 0 && ny < 15 && board[nx][ny] == player) {  
+                count++;  
+            } else {  
+                break;  
+            }  
+        }  
+        // 如果某个方向上连续五个相同棋子，则获胜
+        if (count == 5) {
+            return 1;
+        }  
+        count = 1;  
+        for (int j = 1; j < 5; j++) {  
+            int nx = x - dx[i] * j;  
+            int ny = y - dy[i] * j;  
+            // 判断该方向是否连续五个相同棋子
+            if (nx >= 0 && nx < 15 && ny >= 0 && ny < 15 && board[nx][ny] == player) {  
+                count++;  
+            } else {  
+                break;  
+            }  
+        }  
+        // 如果某个方向上连续五个相同棋子，则获胜
+        if (count == 5) {
+            return 1;
+        }  
+    }  
+    return 0;  
+}  
+  
+int main() {  
+    char board[15][15];  
+    // 初始化棋盘，每个位置设为 'n' 表示空
+    for (int i = 0; i < 15; i++) {  
+        for (int j = 0; j < 15; j++) {  
+            board[i][j] = 'n';  
+        }  
+    }  
+    char player = 'X';  
+    // 游戏主循环
+    while (1) {  
+        printboard(board);  
+        printf("Player %c, enter your move (row col): ", player);  
+        int x, y;  
+        scanf("%d %d", &x, &y);  
+        // 检查输入位置是否为空
+        if (board[x-1][y-1] != 'n') {  
+            printf("Invalid move. Try again.\n");  
+            continue;  
+        }  
+        // 设置棋子
+        board[x-1][y-1] = player;  
+        // 检查是否获胜
+        if (check(board, x-1, y-1, player)) {  
+            printboard(board);  
+            printf("Player %c wins!\n", player);  
+            break;  
+        }
+        // 切换玩家
+        if (player == 'X'){
+            player = 'O';
+        } 
+        else {
+            player = 'X';
+        }
+    }  
+    return 0;  
+}
