@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main() {
+    int i;
+    int position = 0;  // 字符串起始位置
+    char arr[50];  // 存储输入字符串的数组
+    fgets(arr, sizeof(arr), stdin);  // 从标准输入获取字符串
+    printf("\033[H\033[J");  // 清屏
+    while(1) {
+        printf("\033[H\033[J");  // 清屏
+        for (i = 0; i < position; i++) {
+            printf(" ");  // 打印空格以移动字符串位置
+        }
+        printf("\033[0;31m%s\n", arr);  // 打印红色字符串
+        position++;  // 增加位置
+        if (position >= 40) {
+            position = 0;  // 如果位置超过40则重置为0
+        }
+        usleep(200000);  // 暂停200毫秒
+    }
+
+    return 0;
+}
